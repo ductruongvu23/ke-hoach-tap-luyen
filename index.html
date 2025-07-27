@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kế Hoạch Tập Luyện</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="styte.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f4f5; /* zinc-100 */
+        }
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: #2563eb; /* blue-600 */
+            color: white;
+            border-color: #2563eb; /* blue-600 */
+        }
+        .tab-button:not(.active):hover {
+            background-color: #e5e7eb; /* gray-200 */
+        }
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #d1d5db; /* gray-300 */
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #f9fafb; /* gray-50 */
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        tr:nth-child(even) {
+            background-color: #f9fafb; /* gray-50 */
+        }
+        .table-container {
+            max-height: 70vh;
+            overflow-y: auto;
+            border-radius: 0.5rem;
+            border: 1px solid #d1d5db;
+        }
+        .day-highlight-mon { background-color: #eff6ff; } /* blue-50 */
+        .day-highlight-tue { background-color: #fefce8; } /* yellow-50 */
+        .day-highlight-wed { background-color: #fdf2f8; } /* pink-50 */
+        .day-highlight-thu { background-color: #f0fdf4; } /* green-50 */
+        .day-highlight-fri { background-color: #fef3c7; } /* amber-100 */
+        .day-highlight-sat { background-color: #faf5ff; } /* purple-50 */
+        .day-highlight-sun { background-color: #f1f5f9; } /* slate-100 */
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-9xl mx-auto bg-white p-6 rounded-xl shadow-lg">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800">Bảng Tính Kế Hoạch Tập Luyện</h1>
+                <p class="mt-2 text-gray-600">Dành cho mục tiêu Tăng Cơ - Giảm Mỡ. Chọn lịch tập phù hợp với bạn.</p>
+            </div>
+            <div class="mt-4 md:mt-0">
+                <div class="flex space-x-2 border border-gray-300 rounded-lg p-1 bg-gray-100">
+                    <button id="btn-5day" class="tab-button active w-full md:w-auto px-4 py-2 text-sm font-semibold rounded-md">Lịch 5 Buổi</button>
+                    <button id="btn-4day" class="tab-button w-full md:w-auto px-4 py-2 text-sm font-semibold rounded-md">Lịch 4 Buổi</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lịch 5 buổi -->
+        <div id="plan-5day" class="table-container">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="w-1/16">Thứ</th>
+                        <th class="w-2/16">Buổi Tập</th>
+                        <th class="w-3/16">Bài Tập Gợi Ý</th>
+                        <th class="w-1/16 text-center">Hiệp</th>
+                        <th class="w-1/16 text-center">Lần Lặp</th>
+                        <th class="w-4/16">Ghi Chú</th>
+                        <th class="w-1/16 text-center">Hoàn thành</th>
+                        <th class="w-1/5 text-center">khối lượng</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    <tr class="day-highlight-mon">
+                        <td class="font-semibold">Hai</td>
+                        <td class="font-semibold text-blue-600">PUSH 1 (Đẩy)</td>
+                        <td>1. Barbell Bench Press<br>2. Incline Dumbbell Press<br>3. Overhead Press<br>4. Lateral Raises<br>5. Triceps Pushdown</td>
+                        <td class="text-center">3-4</td>
+                        <td class="text-center">8-12</td>
+                        <td>Tập trung vào sức mạnh, các bài compound.</td>
+                        <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-blue-600 focus:ring-blue-500"></td>
+                        <td class="p-0 align-top bg-blue-50">
+                            <textarea 
+                            id="notes-push_1" 
+                            class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                            style="margin-top: 4px;"
+                            placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
+                        </td>
+                    </tr>
+                    <tr class="day-highlight-tue">
+                        <td class="font-semibold">Ba</td>
+                        <td class="font-semibold text-yellow-600">PULL 1 (Kéo)</td>
+                        <td>1. Pull-ups / Lat Pulldown<br>2. Barbell Rows<br>3. Seated Cable Rows<br>4. Face Pulls<br>5. Barbell Curls</td>
+                        <td class="text-center">3-4</td>
+                        <td class="text-center">8-12</td>
+                        <td>Tập trung vào độ dày của lưng.</td>
+                        <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-yellow-600 focus:ring-yellow-500"></td>
+                        <td class="p-0 align-top bg-blue-50">
+                            <textarea 
+                            id="notes-pull_1" 
+                            class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                            style="margin-top: 4px;"
+                            placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
+                        </td>
+                    </tr>
+                    <tr class="day-highlight-wed">
+                        <td class="font-semibold">Tư</td>
+                        <td class="font-semibold text-pink-600">LEGS (Chân)</td>
+                        <td>1. Barbell Back Squat<br>2. Romanian Deadlift<br>3. Leg Press<br>4. Leg Curls<br>5. Calf Raises</td>
+                        <td class="text-center">3-4</td>
+                        <td class="text-center">8-12</td>
+                        <td>Nền tảng sức mạnh cho toàn cơ thể.</td>
+                        <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-pink-600 focus:ring-pink-500"></td>
+                        <td class="p-0 align-top bg-blue-50">
+                                <textarea 
+                                id="notes-leg_1" 
+                                class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                                style="margin-top: 4px;"
+                                placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
+                            </td>
+                    </tr>
+                    <tr class="day-highlight-thu">
+                        <td class="font-semibold">Năm</td>
+                        <td class="font-semibold text-green-600">PUSH 2 (Đẩy)</td>
+                        <td>1. Dumbbell Bench Press<br>2. Machine Chest Fly<br>3. Arnold Press<br>4. Upright Rows<br>5. Overhead Triceps Ext.</td>
+                        <td class="text-center">3-4</td>
+                        <td class="text-center">10-15</td>
+                        <td>Tập trung cảm nhận cơ, tăng số rep.</td>
+                        <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-green-600 focus:ring-green-500"></td>
+                        <td class="p-0 align-top bg-blue-50">
+                            <textarea 
+                            id="notes-push_2" 
+                            class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                            style="margin-top: 4px;"
+                            placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
+                    </tr>
+                    <tr class="day-highlight-fri">
+                        <td class="font-semibold">Sáu</td>
+                        <td class="font-semibold text-amber-600">PULL 2 (Kéo)</td>
+                        <td>1. Wide Grip Lat Pulldown<br>2. Dumbbell Rows<br>3. Straight Arm Pulldown<br>4. Reverse Pec-Deck<br>5. Hammer Curls</td>
+                        <td class="text-center">3-4</td>
+                        <td class="text-center">10-15</td>
+                        <td>Tập trung vào độ rộng của xô.</td>
+                        <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-amber-600 focus:ring-amber-500"></td>
+                        <td class="p-0 align-top bg-blue-50">
+                            <textarea 
+                            id="notes-pull_2" 
+                            class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                            style="margin-top: 4px;"
+                            placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
+                    </tr>
+                    <tr class="day-highlight-sat">
+                        <td class="font-semibold">Bảy</td>
+                        <td class="font-semibold text-gray-500">Nghỉ / Cardio nhẹ</td>
+                        <td>Đi bộ, đạp xe nhẹ nhàng, giãn cơ.</td>
+                        <td class="text-center">-</td>
+                        <td class="text-center">-</td>
+                        <td>Phục hồi chủ động.</td>
+                        <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-gray-500 focus:ring-gray-400"></td>
+                        <td class="p-0 align-top bg-blue-50">
+                            <textarea 
+                            id="notes-satuday" 
+                            class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                            style="margin-top: 4px;"
+                            placeholder="Ghi chú về cảm giác, hoạt động phục hồi..."></textarea>
+                    </tr>
+                    <tr class="day-highlight-sun">
+                        <td class="font-semibold">CN</td>
+                        <td class="font-semibold text-gray-500">Nghỉ</td>
+                        <td>Nghỉ ngơi hoàn toàn.</td>
+                        <td class="text-center">-</td>
+                        <td class="text-center">-</td>
+                        <td>Thời gian để cơ bắp xây dựng và phát triển.</td>
+                        <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-gray-500 focus:ring-gray-400"></td>
+                        <td class="p-0 align-top bg-blue-50">
+                            <textarea 
+                            id="notes-sunday" 
+                            class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                            style="margin-top: 4px;"
+                            placeholder="Ghi chú về cảm giác, hoạt động phục hồi..."></textarea>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Lịch 4 buổi -->
+        <div id="plan-4day" class="table-container hidden">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                       <th class="w-1/16">Thứ</th>
+                        <th class="w-2/16">Buổi Tập</th>
+                        <th class="w-3/16">Bài Tập Gợi Ý</th>
+                        <th class="w-1/16 text-center">Hiệp</th>
+                        <th class="w-1/16 text-center">Lần Lặp</th>
+                        <th class="w-4/16">Ghi Chú</th>
+                        <th class="w-1/16 text-center">Hoàn thành</th>
+                        <th class="w-1/5 text-center">khối lượng</th>
+                    </tr>
+                </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            <tr class="day-highlight-mon">
+                <td class="font-semibold">Hai</td>
+                <td class="font-semibold text-blue-600">Thân Trên 1</td>
+                <td>1. Barbell Bench Press<br>2. Barbell Rows<br>3. Overhead Press<br>4. Lat Pulldown<br>5. Barbell Curls</td>
+                <td class="text-center">3-4</td>
+                <td class="text-center">8-10</td>
+                <td>Tập trung vào sức mạnh tổng thể thân trên.</td>
+                <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-blue-600 focus:ring-blue-500"></td>
+                <td class="p-0 align-top bg-blue-50">
+                    <textarea 
+                        id="notes-4day-mon" 
+                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        style="margin-top: 4px;"
+                        placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
+                </td>
+            </tr>
+            <tr class="day-highlight-tue">
+                <td class="font-semibold">Ba</td>
+                <td class="font-semibold text-pink-600">Thân Dưới 1</td>
+                <td>1. Barbell Back Squat<br>2. Romanian Deadlift<br>3. Leg Press<br>4. Hanging Leg Raises</td>
+                <td class="text-center">3-4</td>
+                <td class="text-center">8-10</td>
+                <td>Tập trung vào sức mạnh tổng thể thân dưới.</td>
+                <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-pink-600 focus:ring-pink-500"></td>
+                <td class="p-0 align-top bg-blue-50">
+                    <textarea 
+                        id="notes-4day-tue" 
+                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        style="margin-top: 4px;"
+                        placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
+                </td>
+            </tr>
+            <tr class="day-highlight-wed">
+                <td class="font-semibold">Tư</td>
+                <td class="font-semibold text-gray-500">Nghỉ</td>
+                <td>Phục hồi chủ động: đi bộ, giãn cơ.</td>
+                <td class="text-center">-</td>
+                <td class="text-center">-</td>
+                <td>Quan trọng cho sự phát triển.</td>
+                <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-gray-500 focus:ring-gray-400"></td>
+                <td class="p-0 align-top bg-blue-50">
+                    <textarea 
+                        id="notes-4day-wed" 
+                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        style="margin-top: 4px;"
+                        placeholder="Ghi chú về cảm giác, hoạt động phục hồi..."></textarea>
+                </td>
+            </tr>
+            <tr class="day-highlight-thu">
+                <td class="font-semibold">Năm</td>
+                <td class="font-semibold text-green-600">Thân Trên 2</td>
+                <td>1. Incline Dumbbell Press<br>2. Seated Cable Rows<br>3. Lateral Raises<br>4. Triceps Pushdown<br>5. Hammer Curls</td>
+                <td class="text-center">3-4</td>
+                <td class="text-center">10-15</td>
+                <td>Tập trung vào cảm nhận, độ nét của cơ.</td>
+                <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-green-600 focus:ring-green-500"></td>
+                <td class="p-0 align-top bg-blue-50">
+                    <textarea 
+                        id="notes-4day-thu" 
+                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        style="margin-top: 4px;"
+                        placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
+                </td>
+            </tr>
+            <tr class="day-highlight-fri">
+                <td class="font-semibold">Sáu</td>
+                <td class="font-semibold text-amber-600">Thân Dưới 2</td>
+                <td>1. Goblet Squat<br>2. Leg Curls<br>3. Leg Extensions<br>4. Cable Crunches</td>
+                <td class="text-center">3-4</td>
+                <td class="text-center">10-15</td>
+                <td>Tập trung vào cảm nhận, độ nét của cơ.</td>
+                <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-amber-600 focus:ring-amber-500"></td>
+                <td class="p-0 align-top bg-blue-50">
+                    <textarea 
+                        id="notes-4day-fri" 
+                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        style="margin-top: 4px;"
+                        placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
+                </td>
+            </tr>
+            <tr class="day-highlight-sat">
+                <td class="font-semibold">Bảy</td>
+                <td class="font-semibold text-gray-500">Nghỉ / Cardio</td>
+                <td>Có thể tập HIIT nếu cảm thấy đủ năng lượng.</td>
+                <td class="text-center">-</td>
+                <td class="text-center">-</td>
+                <td>Lắng nghe cơ thể bạn.</td>
+                <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-gray-500 focus:ring-gray-400"></td>
+                <td class="p-0 align-top bg-blue-50">
+                    <textarea 
+                        id="notes-4day-sat" 
+                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        style="margin-top: 4px;"
+                        placeholder="Ghi chú về cảm giác, hoạt động phục hồi..."></textarea>
+                </td>
+            </tr>
+            <tr class="day-highlight-sun">
+                <td class="font-semibold">CN</td>
+                <td class="font-semibold text-gray-500">Nghỉ</td>
+                <td>Nghỉ ngơi hoàn toàn.</td>
+                <td class="text-center">-</td>
+                <td class="text-center">-</td>
+                <td>Sẵn sàng cho tuần tập mới.</td>
+                <td class="text-center"><input type="checkbox" class="h-5 w-5 rounded text-gray-500 focus:ring-gray-400"></td>
+                <td class="p-0 align-top bg-blue-50">
+                    <textarea 
+                        id="notes-4day-sun" 
+                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        style="margin-top: 4px;"
+                        placeholder="Ghi chú về cảm giác, hoạt động phục hồi..."></textarea>
+                </td>
+            </tr>
+        </tbody>
+            </table>
+        </div>
+        
+        <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <h3 class="font-semibold text-lg text-blue-800">Lưu ý quan trọng</h3>
+            <p class="mt-2 text-sm text-blue-700">
+                <strong>Tăng tiến quá tải (Progressive Overload) là chìa khóa!</strong> Mỗi tuần, hãy cố gắng tăng một chút: nâng nặng hơn một chút, thực hiện thêm 1-2 lần lặp, hoặc giảm thời gian nghỉ. Đây là cách để buộc cơ bắp phải phát triển. Hãy lắng nghe cơ thể và đảm bảo dinh dưỡng, ngủ nghỉ đầy đủ.
+            </p>
+        </div>
+
+    </div>
+
+    <script>
+        const btn5day = document.getElementById('btn-5day');
+        const btn4day = document.getElementById('btn-4day');
+        const plan5day = document.getElementById('plan-5day');
+        const plan4day = document.getElementById('plan-4day');
+
+        btn5day.addEventListener('click', () => {
+            plan5day.classList.remove('hidden');
+            plan4day.classList.add('hidden');
+            btn5day.classList.add('active');
+            btn4day.classList.remove('active');
+        });
+
+        btn4day.addEventListener('click', () => {
+            plan4day.classList.remove('hidden');
+            plan5day.classList.add('hidden');
+            btn4day.classList.add('active');
+            btn5day.classList.remove('active');
+        });
+    </script>
+
+</body>
+</html>
