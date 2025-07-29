@@ -46,14 +46,37 @@
             overflow-y: auto;
             border-radius: 0.5rem;
             border: 1px solid #d1d5db;
+            /* Thêm overflow-x cho mobile */
+            overflow-x: auto;
         }
-        .day-highlight-mon { background-color: #eff6ff; } /* blue-50 */
-        .day-highlight-tue { background-color: #fefce8; } /* yellow-50 */
-        .day-highlight-wed { background-color: #fdf2f8; } /* pink-50 */
-        .day-highlight-thu { background-color: #f0fdf4; } /* green-50 */
-        .day-highlight-fri { background-color: #fef3c7; } /* amber-100 */
-        .day-highlight-sat { background-color: #faf5ff; } /* purple-50 */
-        .day-highlight-sun { background-color: #f1f5f9; } /* slate-100 */
+        /* Responsive cho bảng trên mobile */
+        @media (max-width: 640px) {
+            table, thead, tbody, th, td, tr {
+                font-size: 12px;
+            }
+            th, td {
+                padding: 6px;
+            }
+            .table-container {
+                max-height: none;
+            }
+            .min-w-full {
+                min-width: 700px;
+            }
+            textarea {
+                min-height: 48px !important;
+                font-size: 12px;
+                padding: 6px !important;
+            }
+            input[type="number"], input[type="date"] {
+                padding: 6px !important;
+                font-size: 12px;
+            }
+            .tab-button {
+                padding: 6px 10px !important;
+                font-size: 12px !important;
+            }
+        }
     </style>
 </head>
 <body class="p-4 md:p-8">
@@ -87,18 +110,68 @@
             <div>
                 <h1 class="text-3xl font-bold text-gray-800">Bảng Tính Kế Hoạch Tập Luyện</h1>
                 <p class="mt-2 text-gray-600">Dành cho mục tiêu Tăng Cơ - Giảm Mỡ. Chọn lịch tập phù hợp với bạn.</p>
+                <div class="flex items-center space-x-2 mt-4 flex-wrap gap-y-2">
+                    <label for="week-number" class="text-gray-700 font-medium">Tuần:</label>
+                    <input 
+                        type="number" 
+                        min="1" 
+                        id="week-number" 
+                        class="w-20 p-2 md:p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition text-xs md:text-base" 
+                        placeholder="Số tuần"
+                    >
+                    <label for="week-start" class="text-gray-700 font-medium">Từ ngày:</label>
+                    <input 
+                        type="date" 
+                        id="week-start" 
+                        class="p-2 md:p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition text-xs md:text-base"
+                    >
+                    <label for="week-end" class="text-gray-700 font-medium">đến ngày:</label>
+                    <input 
+                        type="date" 
+                        id="week-end" 
+                        class="p-2 md:p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition text-xs md:text-base"
+                    >
+                    <button 
+                        class="px-4 py-2 md:px-4 md:py-2 px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow transition font-semibold text-xs md:text-base"
+                        id="save-week-btn"
+                    >
+                        Lưu tuần
+                    </button>
+                    <span id="week-label" class="ml-4 text-blue-700 font-semibold text-xs md:text-base"></span>
+                </div>
+                <script>
+                    const weekNumberInput = document.getElementById('week-number');
+                    const weekStartInput = document.getElementById('week-start');
+                    const weekEndInput = document.getElementById('week-end');
+                    const weekLabel = document.getElementById('week-label');
+                    document.getElementById('save-week-btn').onclick = function() {
+                        const week = weekNumberInput.value;
+                        const start = weekStartInput.value;
+                        const end = weekEndInput.value;
+                        if (week && start && end) {
+                            const startDate = new Date(start);
+                            const endDate = new Date(end);
+                            const startStr = `${startDate.getDate()}/${startDate.getMonth()+1}`;
+                            const endStr = `${endDate.getDate()}/${endDate.getMonth()+1}`;
+                            weekLabel.textContent = `(Tuần ${week}; ${startStr} - ${endStr})`;
+                        } else {
+                            weekLabel.textContent = '';
+                        }
+                    };
+                </script>
             </div>
-            <div class="mt-4 md:mt-0">
+            <div class="mt-4 md:mt-0 w-full md:w-auto">
                 <div class="flex space-x-2 border border-gray-300 rounded-lg p-1 bg-gray-100">
-                    <button id="btn-5day" class="tab-button active w-full md:w-auto px-4 py-2 text-sm font-semibold rounded-md">Lịch 5 Buổi</button>
-                    <button id="btn-4day" class="tab-button w-full md:w-auto px-4 py-2 text-sm font-semibold rounded-md">Lịch 4 Buổi</button>
+                    <button id="btn-5day" class="tab-button active w-full md:w-auto px-4 py-2 text-xs md:text-sm font-semibold rounded-md">Lịch 5 Buổi</button>
+                    <button id="btn-4day" class="tab-button w-full md:w-auto px-4 py-2 text-xs md:text-sm font-semibold rounded-md">Lịch 4 Buổi</button>
                 </div>
             </div>
         </div>
 
         <!-- Lịch 5 buổi -->
-        <div id="plan-5day" class="table-container">
-            <table class="min-w-full divide-y divide-gray-200">
+        <div id="plan-5day" class="table-container mt-2 md:mt-0">
+            <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 text-xs md:text-base">
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="w-1/16">Thứ</th>
@@ -123,7 +196,7 @@
                         <td class="p-0 align-top bg-blue-50">
                             <textarea 
                             id="notes-push_1" 
-                            class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                            class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                             style="margin-top: 4px;"
                             placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
                         </td>
@@ -139,7 +212,7 @@
                         <td class="p-0 align-top bg-blue-50">
                             <textarea 
                             id="notes-pull_1" 
-                            class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                            class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                             style="margin-top: 4px;"
                             placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
                         </td>
@@ -155,7 +228,7 @@
                         <td class="p-0 align-top bg-blue-50">
                                 <textarea 
                                 id="notes-leg_1" 
-                                class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                                class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                                 style="margin-top: 4px;"
                                 placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
                             </td>
@@ -171,7 +244,7 @@
                         <td class="p-0 align-top bg-blue-50">
                             <textarea 
                             id="notes-push_2" 
-                            class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                            class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                             style="margin-top: 4px;"
                             placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
                     </tr>
@@ -186,7 +259,7 @@
                         <td class="p-0 align-top bg-blue-50">
                             <textarea 
                             id="notes-pull_2" 
-                            class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                            class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                             style="margin-top: 4px;"
                             placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
                     </tr>
@@ -201,9 +274,10 @@
                         <td class="p-0 align-top bg-blue-50">
                             <textarea 
                             id="notes-satuday" 
-                            class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                            class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                             style="margin-top: 4px;"
                             placeholder="Ghi chú về cảm giác, hoạt động phục hồi..."></textarea>
+                        </td>
                     </tr>
                     <tr class="day-highlight-sun">
                         <td class="font-semibold">CN</td>
@@ -216,17 +290,20 @@
                         <td class="p-0 align-top bg-blue-50">
                             <textarea 
                             id="notes-sunday" 
-                            class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                            class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                             style="margin-top: 4px;"
                             placeholder="Ghi chú về cảm giác, hoạt động phục hồi..."></textarea>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+            </div>
         </div>
 
         <!-- Lịch 4 buổi -->
-        <div id="plan-4day" class="table-container hidden">
-            <table class="min-w-full divide-y divide-gray-200">
+        <div id="plan-4day" class="table-container hidden mt-2 md:mt-0">
+            <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200 text-xs md:text-base">
                 <thead class="bg-gray-50">
                     <tr>
                        <th class="w-1/16">Thứ</th>
@@ -251,7 +328,7 @@
                 <td class="p-0 align-top bg-blue-50">
                     <textarea 
                         id="notes-4day-mon" 
-                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                         style="margin-top: 4px;"
                         placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
                 </td>
@@ -267,7 +344,7 @@
                 <td class="p-0 align-top bg-blue-50">
                     <textarea 
                         id="notes-4day-tue" 
-                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                         style="margin-top: 4px;"
                         placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
                 </td>
@@ -283,7 +360,7 @@
                 <td class="p-0 align-top bg-blue-50">
                     <textarea 
                         id="notes-4day-wed" 
-                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                         style="margin-top: 4px;"
                         placeholder="Ghi chú về cảm giác, hoạt động phục hồi..."></textarea>
                 </td>
@@ -299,7 +376,7 @@
                 <td class="p-0 align-top bg-blue-50">
                     <textarea 
                         id="notes-4day-thu" 
-                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                         style="margin-top: 4px;"
                         placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
                 </td>
@@ -315,7 +392,7 @@
                 <td class="p-0 align-top bg-blue-50">
                     <textarea 
                         id="notes-4day-fri" 
-                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                         style="margin-top: 4px;"
                         placeholder="Số set x rep. Ghi chú về khối lượng, cảm giác tập luyện..."></textarea>
                 </td>
@@ -331,7 +408,7 @@
                 <td class="p-0 align-top bg-blue-50">
                     <textarea 
                         id="notes-4day-sat" 
-                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                         style="margin-top: 4px;"
                         placeholder="Ghi chú về cảm giác, hoạt động phục hồi..."></textarea>
                 </td>
@@ -347,13 +424,14 @@
                 <td class="p-0 align-top bg-blue-50">
                     <textarea 
                         id="notes-4day-sun" 
-                        class="w-full min-h-24 p-3 bg-blue-50 border-none resize-none focus:outline-none"
+                        class="w-full min-h-24 md:min-h-24 min-h-12 p-3 md:p-3 p-1 bg-blue-50 border-none resize-none focus:outline-none text-xs md:text-base"
                         style="margin-top: 4px;"
                         placeholder="Ghi chú về cảm giác, hoạt động phục hồi..."></textarea>
                 </td>
             </tr>
         </tbody>
             </table>
+            </div>
         </div>
         
         <div class="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
