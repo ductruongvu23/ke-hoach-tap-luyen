@@ -5,79 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kế Hoạch Tập Luyện</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="styte.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f4f4f5; /* zinc-100 */
-        }
-        .tab-button {
-            transition: all 0.3s ease;
-        }
-        .tab-button.active {
-            background-color: #2563eb; /* blue-600 */
-            color: white;
-            border-color: #2563eb; /* blue-600 */
-        }
-        .tab-button:not(.active):hover {
-            background-color: #e5e7eb; /* gray-200 */
-        }
-        table {
-            border-collapse: separate;
-            border-spacing: 0;
-            width: 100%;
-        }
-        th, td {
-            border: 1px solid #d1d5db; /* gray-300 */
-            padding: 12px;
-            text-align: left;
-        }
-        th {
-            background-color: #f9fafb; /* gray-50 */
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-        }
-        tr:nth-child(even) {
-            background-color: #f9fafb; /* gray-50 */
-        }
-        .table-container {
-            max-height: 70vh;
-            overflow-y: auto;
-            border-radius: 0.5rem;
-            border: 1px solid #d1d5db;
-            /* Thêm overflow-x cho mobile */
-            overflow-x: auto;
-        }
-        /* Responsive cho bảng trên mobile */
-        @media (max-width: 640px) {
-            table, thead, tbody, th, td, tr {
-                font-size: 12px;
-            }
-            th, td {
-                padding: 6px;
-            }
-            .table-container {
-                max-height: none;
-            }
-            .min-w-full {
-                min-width: 700px;
-            }
-            textarea {
-                min-height: 48px !important;
-                font-size: 12px;
-                padding: 6px !important;
-            }
-            input[type="number"], input[type="date"] {
-                padding: 6px !important;
-                font-size: 12px;
-            }
-            .tab-button {
-                padding: 6px 10px !important;
-                font-size: 12px !important;
-            }
-        }
-    </style>
+    <link href="style.css" rel="stylesheet">
 </head>
 <body class="p-4 md:p-8">
 
@@ -442,6 +370,24 @@
         </div>
 
     </div>
+
+    <script>
+        btn5day.addEventListener('click', () => {
+            plan5day.classList.remove('hidden');
+            plan4day.classList.add('hidden');
+            btn5day.classList.add('active');
+            btn4day.classList.remove('active');
+        });
+
+        btn4day.addEventListener('click', () => {
+            plan4day.classList.remove('hidden');
+            plan5day.classList.add('hidden');
+            btn4day.classList.add('active');
+            btn5day.classList.remove('active');
+        });
+    </script>
+
+</body>
 
     <script>
         const btn5day = document.getElementById('btn-5day');

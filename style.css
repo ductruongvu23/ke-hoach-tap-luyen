@@ -1,4 +1,73 @@
-/* cyrillic-ext */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f4f5; /* zinc-100 */
+}
+.tab-button {
+    transition: all 0.3s ease;
+}
+.tab-button.active {
+    background-color: #2563eb; /* blue-600 */
+    color: white;
+    border-color: #2563eb; /* blue-600 */
+}
+.tab-button:not(.active):hover {
+    background-color: #e5e7eb; /* gray-200 */
+}
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: 100%;
+}
+th, td {
+    border: 1px solid #d1d5db; /* gray-300 */
+    padding: 12px;
+    text-align: left;
+}
+th {
+    background-color: #f9fafb; /* gray-50 */
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+tr:nth-child(even) {
+    background-color: #f9fafb; /* gray-50 */
+}
+.table-container {
+    max-height: 70vh;
+    overflow-y: auto;
+    border-radius: 0.5rem;
+    border: 1px solid #d1d5db;
+    /* Thêm overflow-x cho mobile */
+    overflow-x: auto;
+}
+/* Responsive cho bảng trên mobile */
+@media (max-width: 640px) {
+    table, thead, tbody, th, td, tr {
+        font-size: 12px;
+    }
+    th, td {
+        padding: 6px;
+    }
+    .table-container {
+        max-height: none;
+    }
+    .min-w-full {
+        min-width: 700px;
+    }
+    textarea {
+        min-height: 48px !important;
+        font-size: 12px;
+        padding: 6px !important;
+    }
+    input[type="number"], input[type="date"] {
+        padding: 6px !important;
+        font-size: 12px;
+    }
+    .tab-button {
+        padding: 6px 10px !important;
+        font-size: 12px !important;
+    }
+}
 @font-face {
   font-family: 'Inter';
   font-style: normal;
@@ -250,3 +319,10 @@
   src: url(https://fonts.gstatic.com/s/inter/v19/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
+.day-highlight-mon { background-color: #eff6ff; } /* blue-50 */
+.day-highlight-tue { background-color: #fefce8; } /* yellow-50 */
+.day-highlight-wed { background-color: #fdf2f8; } /* pink-50 */
+.day-highlight-thu { background-color: #f0fdf4; } /* green-50 */
+.day-highlight-fri { background-color: #fef3c7; } /* amber-100 */
+.day-highlight-sat { background-color: #faf5ff; } /* purple-50 */
+.day-highlight-sun { background-color: #f1f5f9; } /* slate-100 */
